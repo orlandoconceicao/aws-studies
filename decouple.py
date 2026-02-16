@@ -105,8 +105,7 @@ class Config(object):
         Convenient shortcut to get.
         """
         return self.get(*args, **kwargs)
-
-
+    
 class RepositoryEmpty(object):
     def __init__(self, source='', encoding=DEFAULT_ENCODING):
         pass
@@ -137,9 +136,10 @@ class RepositoryIni(RepositoryEmpty):
         try:
             return self.parser.get(self.SECTION, key)
         except NoOptionError:
+
             raise KeyError(key)
-
-
+        
+        
 class RepositoryEnv(RepositoryEmpty):
     """
     Retrieves option keys from .env files with fall back to os.environ.
