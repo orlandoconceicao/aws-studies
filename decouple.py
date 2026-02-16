@@ -14,8 +14,8 @@ if PYVERSION >= (3, 0, 0):
     from configparser import ConfigParser, NoOptionError
     text_type = str
 else:
-    from ConfigParser import SafeConfigParser as ConfigParser, NoOptionError
-    text_type = unicode
+    from configparser import ConfigParser, NoOptionError
+    text_type = str
 
 if PYVERSION >= (3, 2, 0):
     read_config = lambda parser, file: parser.read_file(file)

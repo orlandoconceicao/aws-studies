@@ -1,0 +1,107 @@
+========================================
+GUIA COMPLETO - AWS S3 COM PYTHON
+Autor: Orlando Conceição
+========================================
+
+O QUE É S3?
+
+Amazon S3 é um serviço de armazenamento de objetos.
+Serve para guardar imagens, PDFs, vídeos, backups e arquivos estáticos.
+
+CONCEITOS IMPORTANTES:
+
+Bucket = pasta principal
+Object = arquivo
+Key = caminho do arquivo
+IAM = controle de acesso
+
+========================================
+CRIANDO BUCKET
+========================================
+
+1) AWS > S3
+2) Create bucket
+3) Nome único
+4) Escolher região
+5) Create
+
+========================================
+ESTRUTURA DO PROJETO
+========================================
+
+s3-service/
+│
+├── src/
+│   ├── config.py
+│   ├── s3_client.py
+│   └── upload_service.py
+│
+├── uploads/
+│
+├── requirements.txt
+├── .env
+└── main.py
+
+========================================
+requirements.txt
+========================================
+
+boto3
+python-decouple
+
+========================================
+.env
+========================================
+
+AWS_ACCESS_KEY_ID=sua_access_key
+AWS_SECRET_ACCESS_KEY=sua_secret_key
+AWS_REGION=us-east-1
+AWS_BUCKET_NAME=seu_bucket
+
+========================================
+CONFIG CLIENTE S3
+========================================
+
+import boto3
+
+s3 = boto3.client(
+    "s3",
+    aws_access_key_id="ACCESS_KEY",
+    aws_secret_access_key="SECRET_KEY",
+    region_name="us-east-1"
+)
+
+========================================
+UPLOAD DE ARQUIVO
+========================================
+
+s3.upload_file(
+    "caminho_local",
+    "nome_do_bucket",
+    "nome_no_s3"
+)
+
+========================================
+BOAS PRÁTICAS
+========================================
+
+- Nunca expor chaves no código
+- Usar IAM Role em produção
+- Criar bucket privado
+- Usar políticas de acesso
+- Ativar versionamento
+
+========================================
+CONCEITOS IMPORTANTES
+========================================
+
+Bucket
+Object
+IAM
+Policy
+Region
+Versionamento
+
+========================================
+FIM DO GUIA
+========================================
