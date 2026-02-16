@@ -1,0 +1,105 @@
+========================================
+GUIA COMPLETO - AWS LAMBDA PYTHON
+========================================
+
+O QUE É AWS LAMBDA?
+
+Serviço serverless da AWS que executa código sob demanda.
+Você paga apenas pelo tempo de execução.
+
+========================================
+CRIANDO UMA LAMBDA
+========================================
+
+1) AWS > Lambda
+2) Create Function
+3) Author from scratch
+4) Nome: minha_lambda_api
+5) Runtime: Python 3.12
+
+========================================
+ESTRUTURA DO PROJETO
+========================================
+
+aws-lambda/
+│
+├── lambda_function.py
+├── requirements.txt
+
+========================================
+CÓDIGO BASE
+========================================
+
+import json
+
+def lambda_handler(event, context):
+    return {
+        "statusCode": 200,
+        "body": json.dumps({
+            "message": "Lambda funcionando"
+        })
+    }
+
+========================================
+ADICIONANDO DEPENDÊNCIAS
+========================================
+
+requirements.txt:
+
+requests
+
+Instalar dependências na pasta:
+
+pip install -r requirements.txt -t .
+
+Compactar:
+
+zip -r lambda.zip .
+
+Enviar o zip na AWS.
+
+========================================
+LAMBDA + RDS
+========================================
+
+Instalar:
+
+pip install psycopg2-binary -t .
+
+Exemplo de conexão:
+
+import psycopg2
+import os
+
+conn = psycopg2.connect(
+    host=os.environ['DB_HOST'],
+    database=os.environ['DB_NAME'],
+    user=os.environ['DB_USER'],
+    password=os.environ['DB_PASSWORD'],
+    port=5432
+)
+
+========================================
+BOAS PRÁTICAS
+========================================
+
+- Usar variáveis de ambiente
+- Não expor senha no código
+- Usar IAM Role
+- Ativar logs no CloudWatch
+- Colocar Lambda na mesma VPC do RDS
+
+========================================
+CONCEITOS IMPORTANTES
+========================================
+
+Serverless
+API Gateway
+IAM Role
+CloudWatch
+VPC
+Cold Start
+
+========================================
+FIM DO GUIA
+========================================
