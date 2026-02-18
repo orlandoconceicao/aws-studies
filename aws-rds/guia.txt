@@ -130,10 +130,5 @@ COMO RODAR
 set DJANGO_SETTINGS_MODULE=core.settings.dev
 
 ========================================
-TESTAR CONEXÃO
-========================================
-python manage.py migrate
-
-========================================
 FIM DO GUIA
 ========================================
