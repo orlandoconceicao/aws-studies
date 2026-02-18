@@ -1,0 +1,6 @@
+from decouple import config
+
+AWS_ACCESS_KEY_ID = config("AWS_ACCESS_KEY_ID")
+AWS_SECRET_ACCESS_KEY = config("AWS_SECRET_ACCESS_KEY")
+AWS_REGION = config("AWS_REGION")
+SQS_QUEUE_URL = config("SQS_QUEUE_URL")

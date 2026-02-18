@@ -1,0 +1,99 @@
+========================================
+GUIA COMPLETO - AWS SQS COM PYTHON
+========================================
+
+O QUE É SQS?
+
+Amazon SQS é um serviço de fila de mensagens.
+Permite comunicação assíncrona entre sistemas.
+
+TIPOS DE FILA:
+
+Standard → Alta performance
+FIFO → Ordem garantida
+
+========================================
+CRIANDO FILA
+========================================
+
+1) AWS > SQS
+2) Create Queue
+3) Tipo: Standard
+4) Nome: order-queue
+
+Copiar Queue URL.
+
+========================================
+ESTRUTURA DO PROJETO
+========================================
+
+sqs-service/
+│
+├── src/
+│   ├── config.py
+│   ├── sqs_client.py
+│   ├── producer.py
+│   └── consumer.py
+│
+├── requirements.txt
+├── .env
+└── main.py
+
+========================================
+requirements.txt
+========================================
+
+boto3
+python-decouple
+
+========================================
+ENV VARS
+========================================
+
+AWS_ACCESS_KEY_ID=sua_access_key
+AWS_SECRET_ACCESS_KEY=sua_secret_key
+AWS_REGION=us-east-1
+SQS_QUEUE_URL=sua_queue_url
+
+========================================
+ENVIAR MENSAGEM
+========================================
+
+sqs.send_message(
+    QueueUrl=QUEUE_URL,
+    MessageBody="mensagem"
+)
+
+========================================
+RECEBER MENSAGEM
+========================================
+
+sqs.receive_message(
+    QueueUrl=QUEUE_URL,
+    MaxNumberOfMessages=1
+)
+
+========================================
+BOAS PRÁTICAS
+========================================
+
+- Usar IAM Role
+- Deletar mensagem após processar
+- Usar Lambda como consumidor
+- Monitorar com CloudWatch
+- Configurar Dead Letter Queue
+
+========================================
+CONCEITOS IMPORTANTES
+========================================
+
+Queue
+Producer
+Consumer
+Dead Letter Queue
+Visibility Timeout
+Long Polling
+
+========================================
+FIM DO GUIA
+========================================

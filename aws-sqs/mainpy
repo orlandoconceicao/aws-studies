@@ -1,0 +1,15 @@
+from src.producer import send_message
+from src.consumer import receive_messages
+
+if __name__ == "__main__":
+
+    # Enviar mensagem
+    send_message({
+        "order_id": 123,
+        "user": "orlando"
+    })
+
+    print("Mensagem enviada!")
+
+    # Consumir mensagem
+    receive_messages()
