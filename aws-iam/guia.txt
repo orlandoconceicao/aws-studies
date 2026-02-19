@@ -1,0 +1,147 @@
+============================================================
+GUIA COMPLETO – AWS IAM
+Identity and Access Management
+============================================================
+
+
+1) O QUE É IAM?
+------------------------------------------------------------
+
+IAM (Identity and Access Management) é o serviço responsável
+por controlar quem pode acessar quais recursos dentro da AWS.
+
+Ele é a base da segurança em qualquer arquitetura cloud.
+
+Sem IAM bem configurado, sua aplicação está vulnerável.
+
+
+------------------------------------------------------------
+2) CONCEITOS FUNDAMENTAIS
+------------------------------------------------------------
+
+USER
+Identidade usada por pessoas.
+Pode ter:
+- Acesso ao Console
+- Access Key para uso via código
+
+GROUP
+Agrupa usuários com as mesmas permissões.
+Facilita administração.
+
+ROLE
+Identidade usada por serviços (EC2, Lambda).
+É a forma profissional e segura de dar permissões.
+
+POLICY
+Documento JSON que define o que pode ou não pode ser feito.
+
+
+------------------------------------------------------------
+3) ESTRUTURA DE UMA POLICY
+------------------------------------------------------------
+
+Exemplo:
+
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": "s3:GetObject",
+      "Resource": "arn:aws:s3:::meu-bucket/*"
+    }
+  ]
+}
+
+Effect  -> Allow ou Deny
+Action  -> A ação permitida
+Resource -> O recurso específico
+
+
+------------------------------------------------------------
+4) PRINCÍPIO DO MENOR PRIVILÉGIO
+------------------------------------------------------------
+
+Regra de ouro:
+
+Sempre conceder apenas a permissão necessária.
+
+ERRADO:
+AdministratorAccess
+
+CORRETO:
+Permissão específica apenas para o recurso necessário.
+
+
+------------------------------------------------------------
+5) FLUXO PROFISSIONAL DE PERMISSÃO
+------------------------------------------------------------
+
+EC2 ou Lambda
+        ↓
+Assume uma ROLE
+        ↓
+Role possui POLICY
+        ↓
+Policy define acesso específico ao recurso
+
+
+------------------------------------------------------------
+6) BOAS PRÁTICAS DE MERCADO
+------------------------------------------------------------
+
+- Nunca colocar access_key no código
+- Nunca subir credenciais no GitHub
+- Sempre usar IAM Role para serviços
+- Restringir Resource no JSON da policy
+- Evitar permissões globais "*"
+
+
+------------------------------------------------------------
+7) EXEMPLO PRÁTICO REAL
+------------------------------------------------------------
+
+Cenário:
+Lambda precisa acessar S3.
+
+Passos:
+
+1. Criar Role para Lambda
+2. Criar Policy personalizada com:
+   s3:GetObject
+3. Anexar Policy à Role
+4. Associar Role à Lambda
+
+Resultado:
+Lambda acessa apenas o bucket permitido.
+
+
+------------------------------------------------------------
+8) ERROS COMUNS
+------------------------------------------------------------
+
+- Usar AdministratorAccess para tudo
+- Criar Access Key e deixar exposta
+- Não usar Role em EC2
+- Não restringir Resource
+- Misturar permissões de produção com desenvolvimento
+
+
+------------------------------------------------------------
+9) CONCLUSÃO
+------------------------------------------------------------
+
+IAM é a base da segurança na AWS.
+Quem domina IAM pensa como arquiteto cloud.
+
+Sem IAM bem estruturado:
+Não existe produção segura.
+
+Com IAM bem estruturado:
+Arquitetura profissional, escalável e segura.
+
+
+============================================================
+FIM DO GUIA – AWS IAM
+============================================================
