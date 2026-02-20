@@ -1,6 +1,5 @@
 ========================================
 GUIA COMPLETO - AWS S3 COM PYTHON
-Autor: Orlando Conceição
 ========================================
 
 O QUE É S3?
