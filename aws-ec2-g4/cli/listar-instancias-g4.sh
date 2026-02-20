@@ -1,0 +1,1 @@
+listar-instancias-g4.sh
