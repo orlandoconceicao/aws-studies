@@ -1,0 +1,136 @@
+============================================================
+GUIA COMPLETO – AWS S3 GLACIER
+Armazenamento de Longo Prazo
+============================================================
+
+
+1) O QUE É S3 GLACIER?
+------------------------------------------------------------
+
+S3 Glacier é uma classe de armazenamento da AWS
+voltada para arquivos raramente acessados.
+
+Objetivo:
+Reduzir custo de armazenamento.
+
+
+------------------------------------------------------------
+2) CLASSES DISPONÍVEIS
+------------------------------------------------------------
+
+GLACIER_IR (Instant Retrieval)
+Recuperação imediata.
+
+GLACIER (Flexible Retrieval)
+Recuperação em minutos ou horas.
+
+DEEP_ARCHIVE
+Recuperação pode levar até 12 horas.
+Mais barato da AWS.
+
+
+------------------------------------------------------------
+3) QUANDO USAR?
+------------------------------------------------------------
+
+- Backups antigos
+- Logs históricos
+- Arquivos legais
+- Dados de compliance
+- Arquivamento de longo prazo
+
+
+------------------------------------------------------------
+4) COMO APLICAR NA PRÁTICA
+------------------------------------------------------------
+
+Via Console:
+
+1. Criar Bucket
+2. Fazer upload
+3. Selecionar Storage Class → Glacier
+
+Via Python:
+
+s3.upload_file(
+    "arquivo.zip",
+    "bucket",
+    "arquivo.zip",
+    ExtraArgs={"StorageClass": "GLACIER"}
+)
+
+
+------------------------------------------------------------
+5) RESTAURANDO ARQUIVO
+------------------------------------------------------------
+
+É necessário solicitar restore.
+
+restore_object(
+    Days=7,
+    Tier="Standard"
+)
+
+Aguardar processamento.
+
+
+------------------------------------------------------------
+6) LIFECYCLE RULE (AUTOMAÇÃO)
+------------------------------------------------------------
+
+Após 30 dias → mover para Glacier
+Após 365 dias → mover para Deep Archive
+
+Redução automática de custo.
+
+
+------------------------------------------------------------
+7) BOAS PRÁTICAS
+------------------------------------------------------------
+
+- Planejar tempo de recuperação
+- Usar versionamento
+- Automatizar com lifecycle
+- Monitorar custo
+- Não usar Deep Archive para dados críticos imediatos
+
+
+------------------------------------------------------------
+8) ERROS COMUNS
+------------------------------------------------------------
+
+- Não entender tempo de restore
+- Não planejar custo de recuperação
+- Usar Glacier para arquivos ativos
+
+
+------------------------------------------------------------
+9) CONCLUSÃO E NÍVEL DE DOMÍNIO
+------------------------------------------------------------
+
+Agora você já domina:
+
+- Diferença entre S3 Standard e Glacier
+- Classes de armazenamento
+- Upload via boto3
+- Restore de arquivo
+- Lifecycle Rules
+- Estratégia de redução de custo
+
+Você já domina:
+
+IAM (Segurança)
+SQS (Mensageria)
+S3 (Armazenamento)
+S3 Glacier (Arquivamento)
+Lambda (Serverless)
+RDS (Banco Gerenciado)
+VPC (Rede)
+
+Você já está construindo mentalidade
+de Cloud Engineer com visão de arquitetura
+e otimização de custos.
+
+============================================================
+FIM DO GUIA – AWS S3 GLACIER
+============================================================
