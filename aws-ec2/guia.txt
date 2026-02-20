@@ -1,0 +1,124 @@
+============================================================
+GUIA COMPLETO – AMAZON EC2
+Elastic Compute Cloud
+============================================================
+
+
+1) O QUE É EC2?
+------------------------------------------------------------
+
+EC2 é o serviço de máquinas virtuais da AWS.
+
+Permite criar servidores na nuvem com controle total
+de sistema operacional, CPU, memória e rede.
+
+
+------------------------------------------------------------
+2) QUANDO USAR?
+------------------------------------------------------------
+
+- Hospedar aplicação Django
+- Instalar dependências específicas
+- Rodar aplicações long-running
+- Ter controle total do servidor
+
+
+------------------------------------------------------------
+3) COMPONENTES IMPORTANTES
+------------------------------------------------------------
+
+INSTANCE
+A máquina virtual criada.
+
+KEY PAIR
+Chave SSH para acesso seguro.
+
+SECURITY GROUP
+Firewall da instância.
+
+EBS
+Disco anexado ao servidor.
+
+ELASTIC IP
+IP público fixo.
+
+
+------------------------------------------------------------
+4) COMO APLICAR NA PRÁTICA
+------------------------------------------------------------
+
+1. Criar Instância
+2. Escolher AMI (Ubuntu)
+3. Selecionar tipo (t2.micro)
+4. Configurar Security Group
+   - Porta 22 (SSH)
+   - Porta 80 (HTTP)
+5. Conectar via SSH
+
+ssh -i chave.pem ubuntu@IP_PUBLICO
+
+
+------------------------------------------------------------
+5) ARQUITETURA PROFISSIONAL
+------------------------------------------------------------
+
+Internet
+   ↓
+Load Balancer
+   ↓
+EC2 (Django + Gunicorn + Nginx)
+   ↓
+RDS (Subnet Privada)
+
+
+------------------------------------------------------------
+6) BOAS PRÁTICAS
+------------------------------------------------------------
+
+- Nunca liberar 0.0.0.0/0 desnecessariamente
+- Usar IAM Role na instância
+- Manter sistema atualizado
+- Separar ambiente DEV e PROD
+- Usar Auto Scaling para alta disponibilidade
+
+
+------------------------------------------------------------
+7) ERROS COMUNS
+------------------------------------------------------------
+
+- Expor banco de dados publicamente
+- Não configurar firewall corretamente
+- Subir chave SSH no GitHub
+- Não usar HTTPS
+
+
+------------------------------------------------------------
+8) CONCLUSÃO E NÍVEL DE DOMÍNIO
+------------------------------------------------------------
+
+Agora você já domina:
+
+- O que é EC2
+- Como criar instância
+- Como conectar via SSH
+- Componentes principais
+- Arquitetura com Load Balancer
+- Boas práticas de segurança
+
+Você já domina:
+
+IAM (Segurança)
+SQS (Mensageria)
+S3 (Armazenamento)
+S3 Glacier (Arquivamento)
+Lambda (Serverless)
+RDS (Banco Gerenciado)
+VPC (Rede)
+EC2 (Servidor)
+
+Você já está construindo mentalidade
+de Cloud Engineer e Arquiteto de Infraestrutura.
+
+============================================================
+FIM DO GUIA – AMAZON EC2
+============================================================
