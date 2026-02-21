@@ -1,194 +1,108 @@
 ============================================================
 GUIA COMPLETO – AWS VPC
-Virtual Private Cloud
+Autor: Orlando Conceição
 ============================================================
 
+O QUE É VPC?
 
-1) O QUE É VPC?
-------------------------------------------------------------
-
-VPC (Virtual Private Cloud) é uma rede virtual privada
+VPC (Virtual Private Cloud) é uma rede privada virtual
 dentro da AWS.
 
-Ela permite criar um ambiente isolado para executar
-EC2, RDS, Load Balancer, Lambda e outros serviços.
+Permite isolar recursos e controlar tráfego de rede.
 
-Pense nela como o “data center privado”
-da sua aplicação na nuvem.
-
-
-------------------------------------------------------------
-2) COMPONENTES PRINCIPAIS
-------------------------------------------------------------
+============================================================
+COMPONENTES PRINCIPAIS
+============================================================
 
 VPC
-Rede principal. Define o bloco CIDR.
+Rede principal.
+Exemplo CIDR: 10.0.0.0/16
 
 SUBNET
 Divisão da VPC.
 Pode ser:
-- Pública
-- Privada
+- Public
+- Private
 
-INTERNET GATEWAY (IGW)
-Permite comunicação com a internet.
-
-ROUTE TABLE
-Define para onde o tráfego será direcionado.
+INTERNET GATEWAY
+Permite acesso à internet.
 
 NAT GATEWAY
-Permite que subnets privadas acessem a internet
+Permite que instâncias privadas acessem internet
 sem ficarem expostas.
 
+ROUTE TABLE
+Define para onde o tráfego é direcionado.
 
-------------------------------------------------------------
-3) CIDR (BASE DA REDE)
-------------------------------------------------------------
+SECURITY GROUP
+Firewall de instância.
 
-Exemplo:
+NACL
+Firewall de subnet.
 
-10.0.0.0/16
-
-Significa:
-65536 endereços IP disponíveis.
-
-Subdivisão:
-
-10.0.1.0/24
-256 endereços IP disponíveis.
-
-Planejamento de CIDR é essencial
-para arquitetura escalável.
-
-
-------------------------------------------------------------
-4) SUBNET PÚBLICA VS PRIVADA
-------------------------------------------------------------
-
-Subnet Pública:
-- Possui rota para Internet Gateway
-- Pode ter IP público
-- Ideal para Load Balancer e EC2 Web
-
-Subnet Privada:
-- Sem acesso direto à internet
-- Mais segura
-- Ideal para RDS e serviços internos
-
-
-------------------------------------------------------------
-5) ARQUITETURA PROFISSIONAL
-------------------------------------------------------------
+============================================================
+ARQUITETURA PROFISSIONAL
+============================================================
 
 Internet
-   ↓
+    ↓
 Internet Gateway
-   ↓
-VPC (10.0.0.0/16)
-   ↓
-----------------------------------
-| Subnet Pública   → EC2 Web     |
-| Subnet Privada   → RDS         |
-----------------------------------
+    ↓
+Public Subnet (Load Balancer)
+    ↓
+Private Subnet (API / EC2)
+    ↓
+Private Subnet (RDS)
 
-Separação de camadas:
-- Camada Web (pública)
-- Camada Banco (privada)
+Banco nunca deve ficar público.
 
+============================================================
+BOAS PRÁTICAS
+============================================================
 
-------------------------------------------------------------
-6) COMO APLICAR NA PRÁTICA (PASSO A PASSO)
-------------------------------------------------------------
+- Separar subnets públicas e privadas
+- Usar NAT Gateway
+- Nunca liberar banco para 0.0.0.0/0
+- Separar ambientes dev e prod
+- Usar Multi-AZ
+- Usar Security Groups específicos
 
-1. Criar VPC
-   - CIDR: 10.0.0.0/16
+============================================================
+CONCEITOS IMPORTANTES
+============================================================
 
-2. Criar Subnet Pública
-   - CIDR: 10.0.1.0/24
-   - Habilitar auto-assign public IP
+CIDR
+Public Subnet
+Private Subnet
+Internet Gateway
+NAT Gateway
+Route Table
+Security Group
+NACL
+Bastion Host
+High Availability
 
-3. Criar Internet Gateway
-   - Associar à VPC
+============================================================
+ERROS COMUNS
+============================================================
 
-4. Criar Route Table Pública
-   - Adicionar rota:
-     0.0.0.0/0 → Internet Gateway
+- Banco em subnet pública
+- Permissão global para banco
+- Não usar NAT
+- Misturar ambientes
+- Não planejar CIDR corretamente
 
-5. Associar Route Table à Subnet Pública
+============================================================
+CONCLUSÃO
+============================================================
 
-6. Criar Subnet Privada
-   - CIDR: 10.0.2.0/24
-   - Sem rota para internet
+VPC é a base da segurança de rede na AWS.
 
-7. Criar RDS dentro da Subnet Privada
+Sem VPC estruturada:
+Sistema vulnerável.
 
-Resultado:
-- EC2 acessível via internet
-- RDS protegido internamente
-
-
-------------------------------------------------------------
-7) BOAS PRÁTICAS DE MERCADO
-------------------------------------------------------------
-
-- Nunca colocar banco em subnet pública
-- Usar múltiplas Availability Zones (Multi-AZ)
-- Criar VPC separada para produção
-- Separar ambiente DEV e PROD
-- Usar Security Groups como firewall
-- Planejar CIDR pensando em crescimento
-
-
-------------------------------------------------------------
-8) ERROS COMUNS
-------------------------------------------------------------
-
-- Usar VPC padrão da AWS em produção
-- Colocar banco de dados público
-- Não configurar rota corretamente
-- Liberar portas desnecessárias (0.0.0.0/0)
-- Misturar ambientes no mesmo bloco CIDR
-
-
-------------------------------------------------------------
-9) INTEGRAÇÃO COM OUTROS SERVIÇOS
-------------------------------------------------------------
-
-VPC + EC2 → Hospedagem de aplicação
-VPC + RDS → Banco isolado
-VPC + IAM → Controle de acesso
-VPC + Load Balancer → Alta disponibilidade
-VPC + Lambda → Serverless privado
-
-
-------------------------------------------------------------
-10) CONCLUSÃO E NÍVEL DE DOMÍNIO
-------------------------------------------------------------
-
-Agora você já domina:
-
-- Estrutura de rede na AWS
-- Subnet pública vs privada
-- Internet Gateway
-- Route Tables
-- Planejamento de CIDR
-- Arquitetura segura para produção
-
-Sem VPC bem estruturada:
-Não existe segurança real.
-
-Com VPC bem estruturada:
-Você começa a pensar como Arquiteto Cloud.
-
-Você já domina:
-IAM (Segurança)
-SQS (Mensageria)
-S3 (Armazenamento)
-Lambda (Serverless)
-RDS (Banco Gerenciado)
-VPC (Rede)
-
-Isso já é mentalidade de Cloud Engineer.
+Com VPC estruturada:
+Arquitetura profissional, escalável e segura.
 
 ============================================================
 FIM DO GUIA – AWS VPC

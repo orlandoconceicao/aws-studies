@@ -1,0 +1,108 @@
+========================================
+GUIA COMPLETO - AWS STEP FUNCTIONS
+Autor: Orlando Conceição
+========================================
+
+O QUE É AWS STEP FUNCTIONS?
+
+Serviço de orquestração da AWS que coordena
+múltiplos serviços em um fluxo automatizado
+chamado State Machine (Máquina de Estados).
+
+Permite criar processos em etapas,
+com controle de erro, retry automático
+e execução paralela.
+
+========================================
+CRIANDO UMA STATE MACHINE
+========================================
+
+1) AWS > Step Functions
+2) Create state machine
+3) Author with code snippets
+4) Tipo: Standard
+5) Nome: meu_workflow
+
+========================================
+ESTRUTURA DO PROJETO
+========================================
+
+aws-step-functions/
+│
+├── workflow.json
+├── lambda_etapa1.py
+├── lambda_etapa2.py
+
+========================================
+CÓDIGO BASE (workflow.json)
+========================================
+
+{
+  "Comment": "Workflow simples",
+  "StartAt": "Etapa1",
+  "States": {
+    "Etapa1": {
+      "Type": "Task",
+      "Resource": "arn:aws:lambda:REGIAO:CONTA:function:etapa1",
+      "Next": "Etapa2"
+    },
+    "Etapa2": {
+      "Type": "Task",
+      "Resource": "arn:aws:lambda:REGIAO:CONTA:function:etapa2",
+      "End": true
+    }
+  }
+}
+
+========================================
+EXEMPLO LAMBDA ETAPA 1
+========================================
+
+def lambda_handler(event, context):
+    return {
+        "statusCode": 200,
+        "message": "Etapa 1 executada"
+    }
+
+========================================
+CRIANDO VIA CLI
+========================================
+
+aws stepfunctions create-state-machine \
+--name meu_workflow \
+--definition file://workflow.json \
+--role-arn arn:aws:iam::CONTA:role/StepFunctionsRole
+
+========================================
+EXECUTANDO O WORKFLOW
+========================================
+
+aws stepfunctions start-execution \
+--state-machine-arn arn:aws:states:REGIAO:CONTA:stateMachine:meu_workflow
+
+========================================
+BOAS PRÁTICAS
+========================================
+
+- Usar IAM Role com permissões mínimas
+- Implementar tratamento de erro
+- Configurar Retry e Catch
+- Monitorar no CloudWatch
+- Evitar workflows desnecessariamente complexos
+
+========================================
+CONCEITOS IMPORTANTES
+========================================
+
+State Machine
+Task
+Choice
+Parallel
+Retry
+Catch
+Serverless
+Orquestração
+
+========================================
+FIM DO GUIA
+========================================

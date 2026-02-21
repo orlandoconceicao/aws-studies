@@ -1,124 +1,192 @@
 ============================================================
-GUIA COMPLETO – AMAZON EC2
-Elastic Compute Cloud
+GUIA COMPLETO – AWS EC2 G4 INSTANCES
+GPU PARA MACHINE LEARNING E PROCESSAMENTO GRÁFICO
 ============================================================
 
 
-1) O QUE É EC2?
-------------------------------------------------------------
+============================================================
+1) O QUE É EC2 G4?
+============================================================
 
-EC2 é o serviço de máquinas virtuais da AWS.
+EC2 G4 é uma instância da AWS equipada com GPU
+(NVIDIA T4) para processamento acelerado.
 
-Permite criar servidores na nuvem com controle total
-de sistema operacional, CPU, memória e rede.
+Ela combina:
+- CPU
+- Memória RAM
+- GPU dedicada
 
+É ideal para aplicações que exigem
+alto processamento paralelo.
 
-------------------------------------------------------------
-2) QUANDO USAR?
-------------------------------------------------------------
-
-- Hospedar aplicação Django
-- Instalar dependências específicas
-- Rodar aplicações long-running
-- Ter controle total do servidor
-
-
-------------------------------------------------------------
-3) COMPONENTES IMPORTANTES
-------------------------------------------------------------
-
-INSTANCE
-A máquina virtual criada.
-
-KEY PAIR
-Chave SSH para acesso seguro.
-
-SECURITY GROUP
-Firewall da instância.
-
-EBS
-Disco anexado ao servidor.
-
-ELASTIC IP
-IP público fixo.
+Enquanto uma EC2 comum usa apenas CPU,
+a G4 adiciona aceleração gráfica.
 
 
-------------------------------------------------------------
-4) COMO APLICAR NA PRÁTICA
-------------------------------------------------------------
+============================================================
+2) PARA QUE SERVE?
+============================================================
 
-1. Criar Instância
-2. Escolher AMI (Ubuntu)
-3. Selecionar tipo (t2.micro)
-4. Configurar Security Group
-   - Porta 22 (SSH)
-   - Porta 80 (HTTP)
-5. Conectar via SSH
+- Machine Learning
+- Deep Learning
+- Treinamento de modelos
+- Renderização 3D
+- Transcodificação de vídeo
+- Game Streaming
+- Processamento de imagens
 
-ssh -i chave.pem ubuntu@IP_PUBLICO
+Sempre que houver necessidade de GPU,
+a G4 é uma excelente escolha.
 
 
-------------------------------------------------------------
-5) ARQUITETURA PROFISSIONAL
-------------------------------------------------------------
+============================================================
+3) TIPOS DISPONÍVEIS
+============================================================
 
-Internet
+Exemplos:
+
+g4dn.xlarge
+g4dn.2xlarge
+g4dn.12xlarge
+
+Quanto maior o tipo:
+- Mais GPU
+- Mais CPU
+- Mais RAM
+- Maior custo
+
+Escolha baseada na carga de trabalho.
+
+
+============================================================
+4) ARQUITETURA PROFISSIONAL
+============================================================
+
+Usuário
    ↓
 Load Balancer
    ↓
-EC2 (Django + Gunicorn + Nginx)
+EC2 G4 (Aplicação ML)
    ↓
-RDS (Subnet Privada)
+RDS / S3
+
+Separação recomendada:
+
+- Camada Web
+- Camada de Processamento GPU
+- Camada de Banco de Dados
 
 
-------------------------------------------------------------
-6) BOAS PRÁTICAS
-------------------------------------------------------------
+============================================================
+5) COMO APLICAR NA PRÁTICA (PASSO A PASSO)
+============================================================
 
-- Nunca liberar 0.0.0.0/0 desnecessariamente
-- Usar IAM Role na instância
-- Manter sistema atualizado
+1. Criar instância EC2
+   - Tipo: g4dn.xlarge
+   - AMI: Ubuntu 22.04
+
+2. Conectar via SSH
+
+3. Instalar drivers NVIDIA
+
+sudo apt update
+sudo apt install -y nvidia-driver-470
+sudo reboot
+
+4. Verificar GPU
+
+nvidia-smi
+
+Se aparecer NVIDIA T4,
+a GPU está ativa.
+
+
+============================================================
+6) INSTALANDO PYTORCH COM GPU
+============================================================
+
+Atualizar pip:
+
+python3 -m pip install --upgrade pip
+
+Instalar versão com CUDA:
+
+pip install torch torchvision torchaudio \
+--index-url https://download.pytorch.org/whl/cu118
+
+Testar:
+
+import torch
+print(torch.cuda.is_available())
+print(torch.cuda.get_device_name(0))
+
+
+============================================================
+7) BOAS PRÁTICAS DE MERCADO
+============================================================
+
+- Usar Security Groups restritivos
+- Monitorar via CloudWatch
+- Usar Auto Scaling se necessário
 - Separar ambiente DEV e PROD
-- Usar Auto Scaling para alta disponibilidade
+- Desligar instância quando não usar (custo alto)
+- Armazenar dados pesados no S3
 
 
-------------------------------------------------------------
-7) ERROS COMUNS
-------------------------------------------------------------
+============================================================
+8) ERROS COMUNS
+============================================================
 
-- Expor banco de dados publicamente
-- Não configurar firewall corretamente
-- Subir chave SSH no GitHub
-- Não usar HTTPS
+- Não instalar driver NVIDIA
+- Instalar PyTorch sem CUDA
+- Não validar com nvidia-smi
+- Usar G4 para aplicações simples
+- Esquecer que GPU gera custo elevado
 
 
-------------------------------------------------------------
-8) CONCLUSÃO E NÍVEL DE DOMÍNIO
-------------------------------------------------------------
+============================================================
+9) INTEGRAÇÃO COM OUTROS SERVIÇOS
+============================================================
+
+EC2 G4 + S3 → Dataset e modelos
+EC2 G4 + RDS → Persistência de dados
+EC2 G4 + IAM → Controle de acesso
+EC2 G4 + VPC → Isolamento de rede
+EC2 G4 + CloudWatch → Monitoramento
+
+
+============================================================
+10) CONCLUSÃO E NÍVEL DE DOMÍNIO
+============================================================
 
 Agora você já domina:
 
-- O que é EC2
-- Como criar instância
-- Como conectar via SSH
-- Componentes principais
-- Arquitetura com Load Balancer
-- Boas práticas de segurança
+- O que é EC2 com GPU
+- Quando usar G4
+- Instalação de driver NVIDIA
+- Instalação de PyTorch com CUDA
+- Validação de GPU
+- Arquitetura profissional com ML
+
+Sem entender GPU:
+Não existe Machine Learning escalável.
+
+Com EC2 G4 bem configurada:
+Você começa a pensar como ML Engineer em produção.
 
 Você já domina:
 
 IAM (Segurança)
-SQS (Mensageria)
 S3 (Armazenamento)
-S3 Glacier (Arquivamento)
 Lambda (Serverless)
 RDS (Banco Gerenciado)
 VPC (Rede)
-EC2 (Servidor)
+Step Functions (Orquestração)
+EC2 G4 (GPU)
 
-Você já está construindo mentalidade
-de Cloud Engineer e Arquiteto de Infraestrutura.
+Isso já é mentalidade de
+Cloud Engineer + ML Engineer.
 
 ============================================================
-FIM DO GUIA – AMAZON EC2
+FIM DO GUIA – AWS EC2 G4
 ============================================================

@@ -1,0 +1,16 @@
+{
+  "Comment": "Exemplo simples Step Functions",
+  "StartAt": "Etapa1",
+  "States": {
+    "Etapa1": {
+      "Type": "Task",
+      "Resource": "arn:aws:lambda:REGIAO:CONTA:function:etapa1",
+      "Next": "Etapa2"
+    },
+    "Etapa2": {
+      "Type": "Task",
+      "Resource": "arn:aws:lambda:REGIAO:CONTA:function:etapa2",
+      "End": true
+    }
+  }
+}
