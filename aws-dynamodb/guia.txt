@@ -1,0 +1,99 @@
+============================================================
+GUIA COMPLETO – AMAZON DYNAMODB
+Autor: Orlando Conceição
+============================================================
+
+O QUE É DYNAMODB?
+
+DynamoDB é um banco NoSQL totalmente gerenciado
+pela AWS.
+
+É serverless, altamente escalável e rápido.
+
+============================================================
+CONCEITOS PRINCIPAIS
+============================================================
+
+TABLE
+Tabela onde os dados são armazenados.
+
+ITEM
+Registro dentro da tabela.
+
+ATTRIBUTE
+Campo do item.
+
+PRIMARY KEY
+Pode ser:
+- Partition Key
+- Partition Key + Sort Key
+
+============================================================
+MODELAGEM PROFISSIONAL
+============================================================
+
+DynamoDB é modelado pelo padrão de acesso.
+
+Não é banco relacional.
+
+Sempre pensar:
+Como os dados serão consultados?
+
+============================================================
+EXEMPLO DE ITEM
+============================================================
+
+{
+  "order_id": "123",
+  "user": "orlando",
+  "total": 150
+}
+
+============================================================
+POLICY EXEMPLO
+============================================================
+
+{
+  "Effect": "Allow",
+  "Action": [
+    "dynamodb:PutItem",
+    "dynamodb:GetItem"
+  ],
+  "Resource": "arn:aws:dynamodb:us-east-1:123456789012:table/orders"
+}
+
+============================================================
+BOAS PRÁTICAS
+============================================================
+
+- Usar IAM Role
+- Aplicar menor privilégio
+- Planejar chave primária
+- Usar Query em vez de Scan
+- Configurar TTL quando necessário
+- Separar dev e prod
+
+============================================================
+CONCEITOS AVANÇADOS
+============================================================
+
+GSI
+DynamoDB Streams
+TTL
+On-demand capacity
+Provisioned capacity
+Auto Scaling
+
+============================================================
+CONCLUSÃO
+============================================================
+
+DynamoDB é ideal para sistemas de alta escala.
+
+Permite arquitetura serverless,
+event-driven
+e altamente performática.
+
+============================================================
+FIM DO GUIA – AMAZON DYNAMODB
+============================================================

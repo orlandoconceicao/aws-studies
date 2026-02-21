@@ -1,0 +1,102 @@
+============================================================
+GUIA COMPLETO – AMAZON SNS
+Autor: Orlando Conceição
+============================================================
+
+O QUE É SNS?
+
+Amazon SNS é um serviço de mensageria pub/sub.
+
+Permite enviar mensagens para múltiplos destinos.
+
+============================================================
+COMO FUNCIONA
+============================================================
+
+Publisher → SNS Topic → Subscribers
+
+Subscribers podem ser:
+- SQS
+- Lambda
+- Email
+- HTTP
+- SMS
+
+============================================================
+CONCEITOS PRINCIPAIS
+============================================================
+
+TOPIC
+Canal onde mensagens são publicadas.
+
+PUBLISHER
+Quem envia a mensagem.
+
+SUBSCRIBER
+Quem recebe a mensagem.
+
+============================================================
+ARQUITETURA PROFISSIONAL
+============================================================
+
+API cria pedido
+        ↓
+Publica no SNS
+        ↓
+SQS Pagamento
+SQS Estoque
+Lambda Email
+
+Uma mensagem → múltiplos serviços.
+
+============================================================
+POLICY EXEMPLO
+============================================================
+
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": "sns:Publish",
+      "Resource": "arn:aws:sns:us-east-1:123456789012:order-created-topic"
+    }
+  ]
+}
+
+============================================================
+BOAS PRÁTICAS
+============================================================
+
+- Usar IAM Role
+- Aplicar princípio do menor privilégio
+- Usar filtros de mensagem
+- Configurar Dead Letter Queue
+- Monitorar com CloudWatch
+- Separar dev e prod
+
+============================================================
+CONCEITOS IMPORTANTES
+============================================================
+
+Topic
+Publisher
+Subscriber
+Fan-out
+Message Filtering
+Dead Letter Queue
+Event-driven Architecture
+
+============================================================
+CONCLUSÃO
+============================================================
+
+SNS é base de arquiteturas orientadas a eventos.
+
+Permite desacoplamento,
+escalabilidade
+e comunicação profissional entre serviços.
+
+============================================================
+FIM DO GUIA – AMAZON SNS
+============================================================
