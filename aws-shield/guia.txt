@@ -1,0 +1,104 @@
+============================================================
+GUIA COMPLETO – AWS SHIELD
+Autor: Orlando Conceição
+============================================================
+
+O QUE É AWS SHIELD?
+
+AWS Shield é o serviço de proteção contra ataques DDoS.
+
+DDoS é um ataque onde milhares ou milhões de requisições
+tentam derrubar uma aplicação.
+
+============================================================
+TIPOS DE SHIELD
+============================================================
+
+SHIELD STANDARD
+- Gratuito
+- Proteção automática
+- Layer 3 e 4
+
+SHIELD ADVANCED
+- Pago
+- Proteção avançada
+- Inclui suporte DRT
+- Proteção contra custos de ataque
+
+============================================================
+COMO FUNCIONA NA ARQUITETURA
+============================================================
+
+Internet
+    ↓
+CloudFront
+    ↓
+AWS Shield
+    ↓
+Load Balancer
+    ↓
+Aplicação
+
+============================================================
+CAMADAS DE PROTEÇÃO
+============================================================
+
+Layer 3
+Proteção contra ataques de rede (UDP Flood)
+
+Layer 4
+Proteção contra ataques de conexão
+
+Layer 7
+Ataques HTTP Flood
+Necessita WAF + Shield Advanced
+
+============================================================
+SHIELD VS WAF
+============================================================
+
+Shield -> Proteção DDoS
+WAF -> Proteção de aplicação
+
+Ambos juntos = arquitetura segura
+
+============================================================
+BOAS PRÁTICAS
+============================================================
+
+- Usar CloudFront
+- Usar WAF
+- Monitorar CloudWatch
+- Separar ambientes
+- Proteger apenas recursos críticos
+
+============================================================
+CONCEITOS IMPORTANTES
+============================================================
+
+DDoS
+Layer 3
+Layer 4
+Layer 7
+CloudFront
+WAF
+DRT
+Global Edge Network
+
+============================================================
+CONCLUSÃO
+============================================================
+
+AWS Shield protege sua aplicação contra ataques DDoS.
+
+Sem proteção:
+Sistema pode cair facilmente.
+
+Com proteção:
+Arquitetura segura,
+resiliente
+e pronta para produção.
+
+============================================================
+FIM DO GUIA – AWS SHIELD
+============================================================
